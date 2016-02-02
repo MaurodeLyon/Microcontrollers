@@ -39,7 +39,7 @@ int main( void )
 		PORTF = 0x55;
 		PORTG = 0x55;
 		wait( 1000 );
-		// Write 01010101b
+		// Write 111111b
 		PORTA = 0xFF;
 		PORTB = 0xFF;
 		PORTC = 0xFF;
