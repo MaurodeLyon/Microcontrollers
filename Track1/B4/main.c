@@ -9,6 +9,7 @@
 
 #include <util/delay.h>
 
+//wait method to temporarily "freeze" the program
 void wait( int ms )
 {
 	for (int i=0; i<ms; i++)
@@ -20,19 +21,19 @@ void wait( int ms )
 
 int main(void)
 {
-    /* Replace with your application code */
-    DDRD = 0b11111111;
-	PORTD= 0x1;
+	
+    DDRD = 0b11111111;		//Set PORTD to OUTPUT
+	PORTD= 0x1;				//Give PORTD a default value to bit-shift
 	while (1) 
 	{
 	
-		if(PORTD >= 0x80)
+		if(PORTD >= 0x80)	//If statement checks if the current value of PORTD has reached the end of the strip of LEDs
 		{
-			PORTD=0x1;
-			 wait(1000);
+			PORTD=0x1;		//Reset to the begin of the strip of LEDs
+			wait(1000);		//Wait for 1 second
 		}
-		PORTD= PORTD << 1;
-		 wait(1000);
+		PORTD= PORTD << 1;	//Change the value of PORTD with bit-shifting so that the LED thats next in line goes on
+		 wait(1000);		//wait for 1 second
 		
     }
 }

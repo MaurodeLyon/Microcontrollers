@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+//wait method to temporarily "freeze" the program
 void wait( int ms )
 {
 	for (int i=0; i<ms; i++)
@@ -16,8 +17,8 @@ void wait( int ms )
 	}
 }
 
-
-typedef struct {
+//
+struct {
 	char data;
 	int delay ;
 } step;

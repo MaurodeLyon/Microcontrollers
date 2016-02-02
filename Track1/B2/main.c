@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+//wait method to temporarily "freeze" the program
 void wait( int ms )
 {
 	for (int i=0; i<ms; i++)
@@ -16,25 +17,22 @@ void wait( int ms )
 	}
 }
 
-int main(void)
-{
-    
-	
 
+int main(void)
+{	
 	
-	/* Replace with your application code */
-	DDRD = 0b11111111;
+	DDRD = 0b11111111;	//Set PORTD to OUTPUT
 	
     while (1) 
     {
 		
 		
-		PORTD = 0x80;
-		wait(500);
+		PORTD = 0x80;	//Turn on only PORTD7
+		wait(500);		//Wait for 500ms
 		
-		PORTD = 0x40;
+		PORTD = 0x40;	//Turn on only PORTD7
 		
-		wait(500);
+		wait(500);		//Wait for 500ms
     }
 }
 
