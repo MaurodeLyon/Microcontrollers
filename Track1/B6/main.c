@@ -18,7 +18,7 @@ int main(void)
 	int T2W = 1000;					// time to wait
 	while (1)
 	{
-		if (PINC & 0x1)		{				// registreer button press
+		if (PINC & 0x1)		{			// registreer button press
 			if(toggle == 0)
 			{
 				toggle = 1;
