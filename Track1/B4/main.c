@@ -30,10 +30,10 @@ int main(void)
 		if(PORTD >= 0x80)	//If statement checks if the current value of PORTD has reached the end of the strip of LEDs
 		{
 			PORTD=0x1;		//Reset to the begin of the strip of LEDs
-			wait(1000);		//Wait for 1 second
+			wait(50);		//Wait for 50 ms
 		}
 		PORTD= PORTD << 1;	//Change the value of PORTD with bit-shifting so that the LED thats next in line goes on
-		 wait(1000);		//wait for 1 second
+		 wait(50);		//wait for 50 ms
 		
     }
 }
