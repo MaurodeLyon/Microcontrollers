@@ -16,7 +16,7 @@ int main(void)
 	DDRC = 0b11111111;				// zet C naar output
 	DDRD = 0b00000000;				// zet D naar input
 	typedef enum {START,S1,S2,S3,END} STATE;
-	STATE state = START;
+	STATE state = END;
 
 	while (1)
 	{

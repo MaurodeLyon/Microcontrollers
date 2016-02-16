@@ -15,7 +15,8 @@ int main(void)
 	DDRC = 0b00000000;				// zet C naar input
 	PORTD = 0x0;					// zet port D op 0
 	int toggle = 0;					// maak toggle
-	int T2W = 1000;					// time to wait
+	int T2W = 10;					// time to wait
+	int pressed = 0;
 	while (1)
 	{
 		if (PINC & 0x1)		{			// registreer button press
@@ -31,7 +32,7 @@ int main(void)
 			}
 		}
 		wait(T2W);
-		PORTD ^= 0x40;						// toggle portD bit7
+		PORTD ^= 0x40;					// toggle portD bit7
 		
 	}
 	return 1;

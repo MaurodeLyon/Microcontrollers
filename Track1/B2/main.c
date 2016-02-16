@@ -1,9 +1,9 @@
 /*
- * B2.c
- *
- * Created: 2-2-2016 14:47:13
- * Author : Arthur
- */ 
+* B2.c
+*
+* Created: 2-2-2016 14:47:13
+* Author : Arthur
+*/
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -19,20 +19,18 @@ void wait( int ms )
 
 
 int main(void)
-{	
+{
 	
 	DDRD = 0b11111111;	//Set PORTD to OUTPUT
 	
-    while (1) 
-    {
-		
-		
+	while (1)
+	{
 		PORTD = 0x80;	//Turn on only PORTD7
 		wait(500);		//Wait for 500ms
 		
 		PORTD = 0x40;	//Turn on only PORTD7
 		
 		wait(500);		//Wait for 500ms
-    }
+	}
 }
 
