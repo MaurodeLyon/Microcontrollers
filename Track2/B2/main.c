@@ -53,7 +53,7 @@ void nextStep()
 
 ISR( INT1_vect )
 {
-	nextStep();		
+	nextStep();	 //Show the next step of the animation	
 }
 
 ISR( INT3_vect )
@@ -76,12 +76,11 @@ int main( void )
 	// Init I/O
 	DDRD = 0xF0;			// PORTD(7:4) output, PORTD(3:0) input	
 	// Init Interrupt hardware
-	EICRA |= 0xAA;			// INT1 falling edge, INT2 rising edge
-	EIMSK |= 0xF;			// Enable INT1 & INT2
+	EICRA |= 0xAA;			// INT0 through INT3 set to falling edge
+	EIMSK |= 0xF;			// Enable INT1 through INT3
 	
-	// Enable global interrupt system
-	//SREG = 0x80;			// Of direct via SREG of via wrapper
-	sei();				
+	
+	sei();				// Enable global interrupt system
 
 	while (1)
 	{
