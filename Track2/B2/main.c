@@ -56,9 +56,17 @@ ISR( INT1_vect )
 	nextStep();		
 }
 
-ISR( INT2_vect )
+ISR( INT3_vect )
 {
 	nextStep();			
+}
+ISR( INT2_vect )
+{
+	nextStep();
+}
+ISR( INT0_vect )
+{
+	nextStep();
 }
 
 
@@ -68,8 +76,8 @@ int main( void )
 	// Init I/O
 	DDRD = 0xF0;			// PORTD(7:4) output, PORTD(3:0) input	
 	// Init Interrupt hardware
-	EICRA |= 0x38;			// INT1 falling edge, INT2 rising edge
-	EIMSK |= 0x06;			// Enable INT1 & INT2
+	EICRA |= 0xAA;			// INT1 falling edge, INT2 rising edge
+	EIMSK |= 0xF;			// Enable INT1 & INT2
 	
 	// Enable global interrupt system
 	//SREG = 0x80;			// Of direct via SREG of via wrapper
