@@ -1,0 +1,9 @@
+B.3: Coding 7 Segment Display (easy)
+
+Implementeer een functie waarmee een 7 segment display kan worden aangestuurd. 
+Bijvoorbeeld:
+void display(int digit){…}.
+
+er is een display functie gemaakt die met behulp van een lookup table alle waardes op een hexadecimaal display kan weergeven.
+als het getal groter is dan 15 dan wordt er een E met een punt weergegeven om een error voor te stellen.
+er zijn ook functies gemaakt voor het ophogen en verlagen van de getallen op het display.
