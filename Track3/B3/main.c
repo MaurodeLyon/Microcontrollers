@@ -17,14 +17,14 @@ int flip;
 //
 ISR( TIMER2_OVF_vect )
 {
-	PORTD ^= 0x80;
+	PORTD ^= 0x80;			// toggle portd.7
 	if(flip)
 	{
-		TCNT2 = 255-195;
+		TCNT2 = 255-195;	// 15 ms
 		flip = 0;
 	}else
 	{
-		TCNT2 = 255-117;
+		TCNT2 = 255-117;	// 25 ms
 		flip = 1;
 	}
 }
@@ -32,7 +32,7 @@ ISR( TIMER2_OVF_vect )
 //
 void timer2Init( void )
 {
-	flip = 0;
+	flip = 0;				
 	TCNT2 = 0;				// Preset value of counter 2
 	TIMSK |= (1<<6);		// T2 overflow interrupt enable
 	TCCR2 = 0b00000101;		// Initialize T2: ext.counting, rising edge, run
@@ -45,10 +45,8 @@ int main( void )
 	DDRD = 0x80;				// set PORTD.7 for input
 	DDRA = 0xFF;				// set PORTA for output (shows countregister)
 	DDRB = 0xFF;				// set PORTB for output (shows tenthvalue)
-
 	timer2Init();
-	
-	SREG |= (1<<7);			// turn_on intr all
+	SREG |= (1<<7);				// turn_on intr all
 	while (1)
 	{
 		
