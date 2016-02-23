@@ -18,7 +18,17 @@ int main(void)
 {	
 	DDRC = 0b11111111;	//Set PORTD to OUTPUT
 	init_lcd();
-	lcd_writeLine1("a");
+	//lcd_writeLine1("a");
+	lcd_writeChar('p');
+	lcd_writeChar('a');
+	lcd_writeChar('u');
+	lcd_writeChar('l');
+	lcd_writeChar(' ');
+	lcd_writeChar('m');
+	lcd_writeChar('u');
+	lcd_writeChar('s');
+	lcd_writeChar('i');
+	lcd_writeChar('c');
 	while (1)
 	{
 	}
