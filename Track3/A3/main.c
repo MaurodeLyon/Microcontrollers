@@ -8,13 +8,20 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+void init_lcd(void);
+void lcd_writeChar( unsigned char dat );
 void lcd_command( unsigned char dat );
 
 int main(void)
-{	
+{
 	DDRC = 0b11111111;	//Set PORTD to OUTPUT
-	lcd_command(0x02);
-	lcd_command(0x20);
+	init_lcd();
+	lcd_writeChar('H');
+	lcd_writeChar('e');
+	lcd_writeChar('l');
+	lcd_writeChar('l');
+	lcd_writeChar('o');
+	
 	while (1)
 	{
 	}
@@ -37,15 +44,31 @@ void init_lcd(void)
 void lcd_command ( unsigned char dat )
 {
 	PORTC = dat & 0xF0;				// hoge nibble
-	PORTC = PORTC | 0x08;			// data (RS=0), 
+	PORTC = PORTC | 0x08;			// data (RS=0),
+	// start (EN=1)
+	_delay_ms(1);					// wait 1 ms
+	PORTC = 0x04;					// stop (EN = 0)
+	
+	PORTC = (dat & 0x0F) << 4;		// lage nibble
+	PORTC = PORTC | 0x08;			// data (RS=0),
+	// start (EN=1)
+	_delay_ms(1);					// wait 1 ms
+	PORTC = 0x00;					// stop
+	// (EN=0 RS=0)
+}
+
+void lcd_writeChar( unsigned char dat )
+{
+	PORTC = dat & 0xF0;				// hoge nibble
+	PORTC = PORTC | 0x0C;			// data (RS=1),
 									// start (EN=1)
 	_delay_ms(1);					// wait 1 ms
 	PORTC = 0x04;					// stop (EN = 0)
 	
 	PORTC = (dat & 0x0F) << 4;		// lage nibble
-	PORTC = PORTC | 0x08;			// data (RS=0), 
+	PORTC = PORTC | 0x0C;			// data (RS=1),
 									// start (EN=1)
 	_delay_ms(1);					// wait 1 ms
-	PORTC = 0x00;					// stop 
+	PORTC = 0x00;					// stop
 									// (EN=0 RS=0)
 }
