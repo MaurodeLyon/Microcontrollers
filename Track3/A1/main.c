@@ -37,15 +37,15 @@ void init_lcd(void)
 void lcd_command ( unsigned char dat )
 {
 	PORTC = dat & 0xF0;				// hoge nibble
-	PORTC = PORTC | 0x08;			// data (RS=0), 
-									// start (EN=1)
+	PORTC = PORTC | 0x08;				// data (RS=0), 
+							// start (EN=1)
 	_delay_ms(1);					// wait 1 ms
 	PORTC = 0x04;					// stop (EN = 0)
 	
-	PORTC = (dat & 0x0F) << 4;		// lage nibble
-	PORTC = PORTC | 0x08;			// data (RS=0), 
-									// start (EN=1)
+	PORTC = (dat & 0x0F) << 4;			// lage nibble
+	PORTC = PORTC | 0x08;				// data (RS=0), 
+							// start (EN=1)
 	_delay_ms(1);					// wait 1 ms
 	PORTC = 0x00;					// stop 
-									// (EN=0 RS=0)
+							// (EN=0 RS=0)
 }
