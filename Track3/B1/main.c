@@ -11,10 +11,10 @@
 
 int main(void)
 {
-    /* Replace with your application code */
+	//Run the functions as a test.
 	init();
 	set_cursor(2);
-	display_text("Paul4President");
+	display_text("Paul4Preside");
     while (1) 
     {
     }
