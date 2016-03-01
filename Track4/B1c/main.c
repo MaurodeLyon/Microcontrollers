@@ -1,54 +1,61 @@
+/*
+ * Project name:
+     Demo4_4 : PWM with timer 1 Fast PWM mode at PORTB.7 = OCR1A
+ * Author: Avans-TI, JW
+ * Revision History: 
+     20101230: - initial release;
+ * Description:
+     This program gives an interrupt on each ms
+ * Test configuration:
+     MCU:             ATmega128
+     Dev.Board:       BIGAVR6
+     Oscillator:      External Clock 08.0000 MHz
+     Ext. Modules:    -
+     SW:              AVR-GCC
+ * NOTES:
+     - Turn ON the PORT LEDs at SW12.1 - SW12.8
+*/
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+#define BIT(x)			(1 << (x))
+#define INTERVAL  		3822
 
+unsigned int sCount=0, minutes=0, hours=0;
 
+// wait(): busy waiting for 'ms' millisecond
+// Used library: util/delay.h
 void wait( int ms )
 {
 	for (int i=0; i<ms; i++)
 	{
-		_delay_ms( 1 );		// library function (max 30 ms at 8MHz)
+		_delay_ms( 1 );				// library function (max 30 ms at 8MHz)
 	}
 }
 
-int flip;
-// Interrupt routine timer2 overflow
-//
-ISR( TIMER2_OVF_vect )
+// Initialize timer 1: fast PWM at pin PORTB.6 (hundredth ms)
+void timer1Init( void )
 {
-	PORTD ^= 0x80;			// toggle portd.7
-	if(flip)
-	{
-		TCNT2 = 255-195;	// 15 ms
-		flip = 0;
-	}else
-	{
-		TCNT2 = 255-117;	// 25 ms
-		flip = 1;
-	}
-}
-// Initialize timer2
-//
-void timer2Init( void )
-{
-	flip = 0;
-	TCNT2 = 0;				// Preset value of counter 2
-	TIMSK |= (1<<6);		// T2 overflow interrupt enable
-	TCCR2 = 0b00000101;		// Initialize T2: ext.counting, rising edge, run
+	ICR1 = INTERVAL;				// TOP value for counting = INTERVAL*us
+	OCR1A = INTERVAL/2;				// compare value in between
+	TCCR1A = 0b10000010;			// timer, compare output at OC1A=PB5
+	TCCR1B = 0b00011010;			// fast PWM, TOP = ICR1, prescaler=8 (1MHz), RUN
 }
 
 
-// Main program: Counting on T2
+// Main program: Counting on T1
 int main( void )
 {
-	DDRD = 0x80;				// set PORTD.7 for input
-	DDRA = 0xFF;				// set PORTA for output (shows countregister)
-	DDRB = 0xFF;				// set PORTB for output (shows tenthvalue)
-	timer2Init();
-	SREG |= (1<<7);				// turn_on intr all
+	DDRB = 0xFF;					// set PORTB for compare output 
+	DDRA = 0xFF;					// set PORTA for output in main program
+	timer1Init();					// it is running now!!
+
 	while (1)
 	{
-		
+		// do something else
+		wait(100);					// every 100 ms (busy waiting)
+		PORTA ^= BIT(7);			// toggle bit 7 PORTA
 	}
 }
