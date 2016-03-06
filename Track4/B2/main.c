@@ -26,24 +26,25 @@ void wait( int ms )
 // Initialize timer 1: fast PWM at pin PORTB.6 (hundredth ms)
 void timer1Init( void )
 {
-	OCR1A = 255;					// RED, default, off
-	OCR1B = 255;					// GREEN, default, off
-	OCR1C = 255;					// BLUE, default, off
+	OCR1A = 255;					// BLUE, default, off
+	OCR1B = 255;					// RED, default, off
+	OCR1C = 255;					// GREEN, default, off
 	TCCR1A = 0b10101001;		// compare output OC1A,OC1B,OC1C
 	TCCR1B = 0b00001011;		// fast PWM 8 bit, prescaler=64, RUN
 }
 
-// Set pulse width for RED on pin PB5, 0=off, 255=max
+// Set pulse width for RED on pin PB5, 0=max, 255=off
 void setRed( unsigned char red )
 {
 	OCR1B = red;
 }
-
+// Set pulse width for GREEN on pin PB5, 0=max, 255=off
 void setGreen( unsigned char green)
 {
 	OCR1C=green;	
 	
 }
+// Set pulse width for BLUE on pin PB5, 0=max, 255=off
 void setBlue( unsigned char blue)
 {
 	OCR1A=blue;	
