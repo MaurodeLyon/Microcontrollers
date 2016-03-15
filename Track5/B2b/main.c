@@ -15,6 +15,8 @@
 
 #include "uart0.h"
 #include "lcd.h"
+#define F_CPU 8000000UL
+
 
 char character;
 
@@ -41,10 +43,13 @@ int main( void )
 
 	while (1)
 	{
-		wait(50);							// every 50 ms (busy waiting)
+		wait(500);							// every 50 ms (busy waiting)
 		PORTB ^= BIT(7);					// toggle bit 7 for testing
 
 		uart0_receiveString( buffer );		// receive string from uart
+		
+		//display_text(buffer);
+		lcd_writeChar('a');
 		
 		// write string to LCD display
 	}
