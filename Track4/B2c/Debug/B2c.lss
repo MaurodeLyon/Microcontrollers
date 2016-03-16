@@ -3,29 +3,29 @@ B2c.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000170  2**0
+  0 .data         00000000  00800100  00800100  0000023a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000011c  00000000  00000000  00000054  2**1
+  1 .text         000001e6  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000170  2**0
+  2 .comment      00000030  00000000  00000000  0000023a  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001a0  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000026c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000048  00000000  00000000  000001dc  2**0
+  4 .debug_aranges 00000048  00000000  00000000  000002a8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000002d5  00000000  00000000  00000224  2**0
+  5 .debug_info   0000053e  00000000  00000000  000002f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000001ba  00000000  00000000  000004f9  2**0
+  6 .debug_abbrev 000001dd  00000000  00000000  0000082e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000001ea  00000000  00000000  000006b3  2**0
+  7 .debug_line   000002d8  00000000  00000000  00000a0b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000074  00000000  00000000  000008a0  2**2
+  8 .debug_frame  00000074  00000000  00000000  00000ce4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000001dd  00000000  00000000  00000914  2**0
+  9 .debug_str    000001e1  00000000  00000000  00000d58  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000006a  00000000  00000000  00000af1  2**0
+ 10 .debug_loc    00000205  00000000  00000000  00000f39  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000068  00000000  00000000  00000b5b  2**0
+ 11 .debug_ranges 00000080  00000000  00000000  0000113e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -124,7 +124,7 @@ Disassembly of section .text:
   a4:	b2 07       	cpc	r27, r18
   a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
   a8:	22 d0       	rcall	.+68     	; 0xee <main>
-  aa:	36 c0       	rjmp	.+108    	; 0x118 <_exit>
+  aa:	9b c0       	rjmp	.+310    	; 0x1e2 <_exit>
 
 000000ac <__bad_interrupt>:
   ac:	a9 cf       	rjmp	.-174    	; 0x0 <__vectors>
@@ -184,62 +184,320 @@ int main( void )
   f4:	84 e6       	ldi	r24, 0x64	; 100
   f6:	90 e0       	ldi	r25, 0x00	; 0
   f8:	da df       	rcall	.-76     	; 0xae <wait>
-	OCR1C=green;
-	
-}
-void setBlue( unsigned char blue)
-{
-	OCR1A=blue;
-  fa:	cf ef       	ldi	r28, 0xFF	; 255
-  fc:	d0 e0       	ldi	r29, 0x00	; 0
-	OCR1B = red;
-}
-
-void setGreen( unsigned char green)
-{
-	OCR1C=green;
-  fe:	08 e7       	ldi	r16, 0x78	; 120
- 100:	10 e0       	ldi	r17, 0x00	; 0
 }
 
 // Set pulse width for RED on pin PB5, 0=off, 255=max
 void setRed( unsigned char red )
 {
 	OCR1B = red;
- 102:	19 bc       	out	0x29, r1	; 41
- 104:	18 bc       	out	0x28, r1	; 40
+  fa:	19 bc       	out	0x29, r1	; 41
+  fc:	18 bc       	out	0x28, r1	; 40
+}
+
+void setGreen( unsigned char green)
+{
 	OCR1C=green;
+  fe:	8f ef       	ldi	r24, 0xFF	; 255
+ 100:	90 e0       	ldi	r25, 0x00	; 0
+ 102:	90 93 79 00 	sts	0x0079, r25
+ 106:	80 93 78 00 	sts	0x0078, r24
 	
 }
 void setBlue( unsigned char blue)
 {
 	OCR1A=blue;
- 106:	db bd       	out	0x2b, r29	; 43
- 108:	ca bd       	out	0x2a, r28	; 42
+ 10a:	9b bd       	out	0x2b, r25	; 43
+ 10c:	8a bd       	out	0x2a, r24	; 42
+	wait(100);
+	
+	setRed(0);
+	setGreen(255);
+	setBlue(255);
+	wait(10000);
+ 10e:	80 e1       	ldi	r24, 0x10	; 16
+ 110:	97 e2       	ldi	r25, 0x27	; 39
+ 112:	cd df       	rcall	.-102    	; 0xae <wait>
+	while (1)
+	{
+		//Turn on the green LED
+		for(int green=255; green >=0; green-=1)
+ 114:	cc 24       	eor	r12, r12
+ 116:	ca 94       	dec	r12
+ 118:	d1 2c       	mov	r13, r1
 	OCR1B = red;
 }
 
 void setGreen( unsigned char green)
 {
 	OCR1C=green;
- 10a:	f8 01       	movw	r30, r16
- 10c:	d1 83       	std	Z+1, r29	; 0x01
- 10e:	c0 83       	st	Z, r28
-		////Turn off all LED'
-		//setRed( 255 );
-		//setBlue( 255 );
-		//setGreen( 255 );
+ 11a:	08 e7       	ldi	r16, 0x78	; 120
+ 11c:	10 e0       	ldi	r17, 0x00	; 0
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off red LED
+		for(int red=0; red <=255; red+=1)
+ 11e:	e1 2c       	mov	r14, r1
+ 120:	f1 2c       	mov	r15, r1
+	setBlue(255);
+	wait(10000);
+	while (1)
+	{
+		//Turn on the green LED
+		for(int green=255; green >=0; green-=1)
+ 122:	cc 2d       	mov	r28, r12
+ 124:	dd 2d       	mov	r29, r13
+ 126:	ce 01       	movw	r24, r28
+ 128:	99 27       	eor	r25, r25
+	OCR1B = red;
+}
 
-		wait(100);
- 110:	84 e6       	ldi	r24, 0x64	; 100
- 112:	90 e0       	ldi	r25, 0x00	; 0
- 114:	cc df       	rcall	.-104    	; 0xae <wait>
+void setGreen( unsigned char green)
+{
+	OCR1C=green;
+ 12a:	f8 01       	movw	r30, r16
+ 12c:	91 83       	std	Z+1, r25	; 0x01
+ 12e:	80 83       	st	Z, r24
+	{
+		//Turn on the green LED
+		for(int green=255; green >=0; green-=1)
+		{
+			setGreen(green);
+			wait(5);
+ 130:	85 e0       	ldi	r24, 0x05	; 5
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	bc df       	rcall	.-136    	; 0xae <wait>
+	setBlue(255);
+	wait(10000);
+	while (1)
+	{
+		//Turn on the green LED
+		for(int green=255; green >=0; green-=1)
+ 136:	21 97       	sbiw	r28, 0x01	; 1
+ 138:	b0 f7       	brcc	.-20     	; 0x126 <main+0x38>
+		{
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
+ 13a:	80 e1       	ldi	r24, 0x10	; 16
+ 13c:	97 e2       	ldi	r25, 0x27	; 39
+ 13e:	b7 df       	rcall	.-146    	; 0xae <wait>
+		//Turn off red LED
+		for(int red=0; red <=255; red+=1)
+ 140:	ce 2d       	mov	r28, r14
+ 142:	df 2d       	mov	r29, r15
+ 144:	ce 01       	movw	r24, r28
+ 146:	99 27       	eor	r25, r25
+}
 
+// Set pulse width for RED on pin PB5, 0=off, 255=max
+void setRed( unsigned char red )
+{
+	OCR1B = red;
+ 148:	99 bd       	out	0x29, r25	; 41
+ 14a:	88 bd       	out	0x28, r24	; 40
+		wait(10000);
+		//Turn off red LED
+		for(int red=0; red <=255; red+=1)
+		{
+			setRed(red);
+			wait(5);
+ 14c:	85 e0       	ldi	r24, 0x05	; 5
+ 14e:	90 e0       	ldi	r25, 0x00	; 0
+ 150:	ae df       	rcall	.-164    	; 0xae <wait>
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off red LED
+		for(int red=0; red <=255; red+=1)
+ 152:	21 96       	adiw	r28, 0x01	; 1
+ 154:	c1 15       	cp	r28, r1
+ 156:	f1 e0       	ldi	r31, 0x01	; 1
+ 158:	df 07       	cpc	r29, r31
+ 15a:	a1 f7       	brne	.-24     	; 0x144 <main+0x56>
+		{
+			setRed(red);
+			wait(5);
+		}
+		wait(10000);
+ 15c:	80 e1       	ldi	r24, 0x10	; 16
+ 15e:	97 e2       	ldi	r25, 0x27	; 39
+ 160:	a6 df       	rcall	.-180    	; 0xae <wait>
+		
+
+		//Turn on the blue LED
+		for(int blue=255 ; blue >=0; blue-=1)
+ 162:	cc 2d       	mov	r28, r12
+ 164:	dd 2d       	mov	r29, r13
+ 166:	ce 01       	movw	r24, r28
+ 168:	99 27       	eor	r25, r25
+	OCR1C=green;
+	
+}
+void setBlue( unsigned char blue)
+{
+	OCR1A=blue;
+ 16a:	9b bd       	out	0x2b, r25	; 43
+ 16c:	8a bd       	out	0x2a, r24	; 42
+
+		//Turn on the blue LED
+		for(int blue=255 ; blue >=0; blue-=1)
+		{
+			setBlue(blue);
+			wait(5);
+ 16e:	85 e0       	ldi	r24, 0x05	; 5
+ 170:	90 e0       	ldi	r25, 0x00	; 0
+ 172:	9d df       	rcall	.-198    	; 0xae <wait>
+		}
+		wait(10000);
+		
+
+		//Turn on the blue LED
+		for(int blue=255 ; blue >=0; blue-=1)
+ 174:	21 97       	sbiw	r28, 0x01	; 1
+ 176:	b8 f7       	brcc	.-18     	; 0x166 <main+0x78>
+		{
+			setBlue(blue);
+			wait(5);
+		}
+		wait(10000);
+ 178:	80 e1       	ldi	r24, 0x10	; 16
+ 17a:	97 e2       	ldi	r25, 0x27	; 39
+ 17c:	98 df       	rcall	.-208    	; 0xae <wait>
+		//Turn off green led
+		for(int green=0; green<=255; green+=1)
+ 17e:	ce 2d       	mov	r28, r14
+ 180:	df 2d       	mov	r29, r15
+ 182:	ce 01       	movw	r24, r28
+ 184:	99 27       	eor	r25, r25
+	OCR1B = red;
+}
+
+void setGreen( unsigned char green)
+{
+	OCR1C=green;
+ 186:	f8 01       	movw	r30, r16
+ 188:	91 83       	std	Z+1, r25	; 0x01
+ 18a:	80 83       	st	Z, r24
+		wait(10000);
+		//Turn off green led
+		for(int green=0; green<=255; green+=1)
+		{
+			setGreen(green);
+			wait(5);
+ 18c:	85 e0       	ldi	r24, 0x05	; 5
+ 18e:	90 e0       	ldi	r25, 0x00	; 0
+ 190:	8e df       	rcall	.-228    	; 0xae <wait>
+			setBlue(blue);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off green led
+		for(int green=0; green<=255; green+=1)
+ 192:	21 96       	adiw	r28, 0x01	; 1
+ 194:	c1 15       	cp	r28, r1
+ 196:	f1 e0       	ldi	r31, 0x01	; 1
+ 198:	df 07       	cpc	r29, r31
+ 19a:	99 f7       	brne	.-26     	; 0x182 <main+0x94>
+		{
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
+ 19c:	80 e1       	ldi	r24, 0x10	; 16
+ 19e:	97 e2       	ldi	r25, 0x27	; 39
+ 1a0:	86 df       	rcall	.-244    	; 0xae <wait>
+		
+
+		//turn on red LED
+		for(int redd=255; redd >=0; redd-=1)
+ 1a2:	cc 2d       	mov	r28, r12
+ 1a4:	dd 2d       	mov	r29, r13
+ 1a6:	ce 01       	movw	r24, r28
+ 1a8:	99 27       	eor	r25, r25
+}
+
+// Set pulse width for RED on pin PB5, 0=off, 255=max
+void setRed( unsigned char red )
+{
+	OCR1B = red;
+ 1aa:	99 bd       	out	0x29, r25	; 41
+ 1ac:	88 bd       	out	0x28, r24	; 40
+
+		//turn on red LED
+		for(int redd=255; redd >=0; redd-=1)
+		{
+			setRed(redd);
+			wait(5);
+ 1ae:	85 e0       	ldi	r24, 0x05	; 5
+ 1b0:	90 e0       	ldi	r25, 0x00	; 0
+ 1b2:	7d df       	rcall	.-262    	; 0xae <wait>
+		}
+		wait(10000);
+		
+
+		//turn on red LED
+		for(int redd=255; redd >=0; redd-=1)
+ 1b4:	21 97       	sbiw	r28, 0x01	; 1
+ 1b6:	b8 f7       	brcc	.-18     	; 0x1a6 <main+0xb8>
+		{
+			setRed(redd);
+			wait(5);
+		}
+		wait(10000);
+ 1b8:	80 e1       	ldi	r24, 0x10	; 16
+ 1ba:	97 e2       	ldi	r25, 0x27	; 39
+ 1bc:	78 df       	rcall	.-272    	; 0xae <wait>
+		//Turn off the blue LED
+		for(int blue=0 ; blue <=255; blue+=1)
+ 1be:	ce 2d       	mov	r28, r14
+ 1c0:	df 2d       	mov	r29, r15
+ 1c2:	ce 01       	movw	r24, r28
+ 1c4:	99 27       	eor	r25, r25
+	OCR1C=green;
+	
+}
+void setBlue( unsigned char blue)
+{
+	OCR1A=blue;
+ 1c6:	9b bd       	out	0x2b, r25	; 43
+ 1c8:	8a bd       	out	0x2a, r24	; 42
+		wait(10000);
+		//Turn off the blue LED
+		for(int blue=0 ; blue <=255; blue+=1)
+		{
+			setBlue(blue);
+			wait(5);
+ 1ca:	85 e0       	ldi	r24, 0x05	; 5
+ 1cc:	90 e0       	ldi	r25, 0x00	; 0
+ 1ce:	6f df       	rcall	.-290    	; 0xae <wait>
+			setRed(redd);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off the blue LED
+		for(int blue=0 ; blue <=255; blue+=1)
+ 1d0:	21 96       	adiw	r28, 0x01	; 1
+ 1d2:	c1 15       	cp	r28, r1
+ 1d4:	f1 e0       	ldi	r31, 0x01	; 1
+ 1d6:	df 07       	cpc	r29, r31
+ 1d8:	a1 f7       	brne	.-24     	; 0x1c2 <main+0xd4>
+		{
+			setBlue(blue);
+			wait(5);
+		}
+		wait(10000);
+ 1da:	80 e1       	ldi	r24, 0x10	; 16
+ 1dc:	97 e2       	ldi	r25, 0x27	; 39
+ 1de:	67 df       	rcall	.-306    	; 0xae <wait>
 	}
- 116:	f5 cf       	rjmp	.-22     	; 0x102 <main+0x14>
+ 1e0:	a0 cf       	rjmp	.-192    	; 0x122 <main+0x34>
 
-00000118 <_exit>:
- 118:	f8 94       	cli
+000001e2 <_exit>:
+ 1e2:	f8 94       	cli
 
-0000011a <__stop_program>:
- 11a:	ff cf       	rjmp	.-2      	; 0x11a <__stop_program>
+000001e4 <__stop_program>:
+ 1e4:	ff cf       	rjmp	.-2      	; 0x1e4 <__stop_program>

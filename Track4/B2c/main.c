@@ -1,9 +1,9 @@
 /*
- * B2c.c
- *
- * Created: 1-3-2016 13:23:01
- * Author : Arthur
- */ 
+* B2c.c
+*
+* Created: 1-3-2016 13:23:01
+* Author : Arthur
+*/
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -57,71 +57,59 @@ int main( void )
 	DDRB = 0xFF;					// set PORTB for compare output
 	timer1Init();
 	wait(100);
-
+	
+	setRed(0);
+	setGreen(255);
+	setBlue(255);
+	wait(10000);
 	while (1)
 	{
+		//Turn on the green LED
+		for(int green=255; green >=0; green-=1)
+		{
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off red LED
+		for(int red=0; red <=255; red+=1)
+		{
+			setRed(red);
+			wait(5);
+		}
+		wait(10000);
 		
-		//Turn off all LED's but red
-		setRed( 0 );
-		setBlue( 255 );
-		setGreen( 255 );
+
+		//Turn on the blue LED
+		for(int blue=255 ; blue >=0; blue-=1)
+		{
+			setBlue(blue);
+			wait(5);
+		}
+		wait(10000);
+		//Turn off green led
+		for(int green=0; green<=255; green+=1)
+		{
+			setGreen(green);
+			wait(5);
+		}
+		wait(10000);
 		
-		////Turn on the green LED		
-		//for(int green=255; green >=0; green-=2)
-		//{
-			//setGreen(green);
-			////wait(10);
-			//
-		//}
-		////Turn off red
-		//for(int red=0; red <=255; red+=2)
-		//{
-			//setRed(red);
-			//wait(10);
-			//
-		//}
-		//
-		////Turn on the blue LED
-		//for(int blue=255 ; blue >=0; blue-=2)
-		//{
-			//
-			//setBlue(blue);
-			//wait(10);
-		//}
-		////Turn off green led
-		//for(int green=0; green<=255; green+=2)
-		//{
-			//
-			//setGreen(green);
-			//wait(10);
-		//}
-		//
-		////turn on red
-		//for(int red=255; red <=0; red-=2)
-		//{
-			//setRed(red);
-			//wait(10);
-			//
-		//}
-		
-		
-		
+
+		//turn on red LED
+		for(int redd=255; redd >=0; redd-=1)
+		{
+			setRed(redd);
+			wait(5);
+		}
+		wait(10000);
 		//Turn off the blue LED
-		//for(int blue=0 ; blue <=255; blue+=2)
-		//{
-			//
-			//setBlue(blue);
-			//wait(10);
-		//}
-		////Turn off the green LED
-		//
-		////Turn off all LED'
-		//setRed( 255 );
-		//setBlue( 255 );
-		//setGreen( 255 );
-
-		wait(100);
-
+		for(int blue=0 ; blue <=255; blue+=1)
+		{
+			setBlue(blue);
+			wait(5);
+		}
+		wait(10000);
 	}
 }
 

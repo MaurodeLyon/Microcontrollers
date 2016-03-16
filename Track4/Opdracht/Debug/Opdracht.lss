@@ -213,8 +213,8 @@ static void lcd_command ( unsigned char dat )
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-     142:	ef ec       	ldi	r30, 0xCF	; 207
-     144:	f7 e0       	ldi	r31, 0x07	; 7
+     142:	e9 ef       	ldi	r30, 0xF9	; 249
+     144:	f0 e0       	ldi	r31, 0x00	; 0
      146:	31 97       	sbiw	r30, 0x01	; 1
      148:	f1 f7       	brne	.-4      	; 0x146 <lcd_command+0xc>
      14a:	00 c0       	rjmp	.+0      	; 0x14c <lcd_command+0x12>
@@ -233,8 +233,8 @@ static void lcd_command ( unsigned char dat )
      15a:	85 bb       	out	0x15, r24	; 21
 	PORTC = PORTC | 0x08;			// data (RS=0),
      15c:	ab 9a       	sbi	0x15, 3	; 21
-     15e:	8f ec       	ldi	r24, 0xCF	; 207
-     160:	97 e0       	ldi	r25, 0x07	; 7
+     15e:	89 ef       	ldi	r24, 0xF9	; 249
+     160:	90 e0       	ldi	r25, 0x00	; 0
      162:	01 97       	sbiw	r24, 0x01	; 1
      164:	f1 f7       	brne	.-4      	; 0x162 <lcd_command+0x28>
      166:	00 c0       	rjmp	.+0      	; 0x168 <lcd_command+0x2e>
@@ -324,8 +324,8 @@ static void lcd_writeChar( unsigned char dat )
      1a4:	85 b3       	in	r24, 0x15	; 21
      1a6:	8c 60       	ori	r24, 0x0C	; 12
      1a8:	85 bb       	out	0x15, r24	; 21
-     1aa:	8f ec       	ldi	r24, 0xCF	; 207
-     1ac:	97 e0       	ldi	r25, 0x07	; 7
+     1aa:	89 ef       	ldi	r24, 0xF9	; 249
+     1ac:	90 e0       	ldi	r25, 0x00	; 0
      1ae:	01 97       	sbiw	r24, 0x01	; 1
      1b0:	f1 f7       	brne	.-4      	; 0x1ae <display_text+0x26>
      1b2:	00 c0       	rjmp	.+0      	; 0x1b4 <display_text+0x2c>
@@ -345,8 +345,8 @@ static void lcd_writeChar( unsigned char dat )
      1c2:	95 b3       	in	r25, 0x15	; 21
      1c4:	9c 60       	ori	r25, 0x0C	; 12
      1c6:	95 bb       	out	0x15, r25	; 21
-     1c8:	8f ec       	ldi	r24, 0xCF	; 207
-     1ca:	97 e0       	ldi	r25, 0x07	; 7
+     1c8:	89 ef       	ldi	r24, 0xF9	; 249
+     1ca:	90 e0       	ldi	r25, 0x00	; 0
      1cc:	01 97       	sbiw	r24, 0x01	; 1
      1ce:	f1 f7       	brne	.-4      	; 0x1cc <display_text+0x44>
      1d0:	00 c0       	rjmp	.+0      	; 0x1d2 <display_text+0x4a>
@@ -434,8 +434,8 @@ void wait( int ms )
      222:	6c f4       	brge	.+26     	; 0x23e <wait+0x20>
      224:	20 e0       	ldi	r18, 0x00	; 0
      226:	30 e0       	ldi	r19, 0x00	; 0
-     228:	ef ec       	ldi	r30, 0xCF	; 207
-     22a:	f7 e0       	ldi	r31, 0x07	; 7
+     228:	e9 ef       	ldi	r30, 0xF9	; 249
+     22a:	f0 e0       	ldi	r31, 0x00	; 0
      22c:	31 97       	sbiw	r30, 0x01	; 1
      22e:	f1 f7       	brne	.-4      	; 0x22c <wait+0xe>
      230:	00 c0       	rjmp	.+0      	; 0x232 <wait+0x14>
