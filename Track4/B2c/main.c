@@ -61,58 +61,64 @@ int main( void )
 	while (1)
 	{
 		
-		//Turn off all LED's
-		setRed( 255 );
+		//Turn off all LED's but red
+		setRed( 0 );
 		setBlue( 255 );
 		setGreen( 255 );
 		
-		//Turn on the red LED		
-		for(int red=255; red >=0; red-=2)
-		{
-			setRed(red);
-			wait(250);
-			
-		}
-		//Turn on the blue LED
-		for(int blue=255 ; blue >=0; blue-=2)
-		{
-			
-			setBlue(blue);
-			wait(250);
-		}
-		//Turn on the green LED
-		for(int green=255; green>=0; green-=2)
-		{
-			
-			setGreen(green);
-			wait(250);
-		}
+		////Turn on the green LED		
+		//for(int green=255; green >=0; green-=2)
+		//{
+			//setGreen(green);
+			////wait(10);
+			//
+		//}
+		////Turn off red
+		//for(int red=0; red <=255; red+=2)
+		//{
+			//setRed(red);
+			//wait(10);
+			//
+		//}
+		//
+		////Turn on the blue LED
+		//for(int blue=255 ; blue >=0; blue-=2)
+		//{
+			//
+			//setBlue(blue);
+			//wait(10);
+		//}
+		////Turn off green led
+		//for(int green=0; green<=255; green+=2)
+		//{
+			//
+			//setGreen(green);
+			//wait(10);
+		//}
+		//
+		////turn on red
+		//for(int red=255; red <=0; red-=2)
+		//{
+			//setRed(red);
+			//wait(10);
+			//
+		//}
 		
-		//Turn off the red LED
-		for(int red=0; red <=255; red+=2)
-		{
-			setRed(red);
-			wait(250);
-			
-		}
+		
+		
 		//Turn off the blue LED
-		for(int blue=0 ; blue <=255; blue+=2)
-		{
-			
-			setBlue(blue);
-			wait(250);
-		}
-		//Turn off the green LED
-		for(int green=0; green<=255; green+=2)
-		{
-			
-			setGreen(green);
-			wait(250);
-		}
-		//Turn off all LED'
-		setRed( 255 );
-		setBlue( 255 );
-		setGreen( 255 );
+		//for(int blue=0 ; blue <=255; blue+=2)
+		//{
+			//
+			//setBlue(blue);
+			//wait(10);
+		//}
+		////Turn off the green LED
+		//
+		////Turn off all LED'
+		//setRed( 255 );
+		//setBlue( 255 );
+		//setGreen( 255 );
 
 		wait(100);
 

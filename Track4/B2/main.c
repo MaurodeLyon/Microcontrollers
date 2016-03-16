@@ -109,7 +109,7 @@ void fadeBlue()
 int main( void )
 {
 	DDRB = 0xFF;					// set PORTB for compare output
-	timer1Init()					//Initialise the timer
+	timer1Init();					//Initialise the timer
 	wait(100);
 
 	while (1)
