@@ -201,7 +201,7 @@ int main( void )
 	while (1)
 	{
 		// do something else
-		wait(100);					// every 100 ms (busy waiting)
+		wait(100);				// every 100 ms (busy waiting)
   f2:	84 e6       	ldi	r24, 0x64	; 100
   f4:	90 e0       	ldi	r25, 0x00	; 0
   f6:	db df       	rcall	.-74     	; 0xae <wait>

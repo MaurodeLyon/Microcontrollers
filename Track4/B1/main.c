@@ -55,7 +55,7 @@ int main( void )
 	while (1)
 	{
 		// do something else
-		wait(100);					// every 100 ms (busy waiting)
+		wait(100);				// every 100 ms (busy waiting)
 		PORTA ^= BIT(7);			// toggle bit 7 PORTA
 	}
 }
