@@ -147,8 +147,8 @@ void wait( int ms )
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  b8:	ef ec       	ldi	r30, 0xCF	; 207
-  ba:	f7 e0       	ldi	r31, 0x07	; 7
+  b8:	e9 ef       	ldi	r30, 0xF9	; 249
+  ba:	f0 e0       	ldi	r31, 0x00	; 0
   bc:	31 97       	sbiw	r30, 0x01	; 1
   be:	f1 f7       	brne	.-4      	; 0xbc <wait+0xe>
   c0:	00 c0       	rjmp	.+0      	; 0xc2 <wait+0x14>
