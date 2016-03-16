@@ -15,6 +15,7 @@
 #define SPI_MOSI 2		// PB2: spi Pin MOSI
 #define SPI_MISO 3		// PB3: spi Pin MISO
 #define SPI_SS 0		// PB0: spi Pin Slave Select
+#define F_CPU 1000000UL
 
 // wait(): busy waiting for 'ms' millisecond - used library: util/delay.h
 void wait(int ms)
