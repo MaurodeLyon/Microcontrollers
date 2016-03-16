@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{23de8c32-b595-4ec8-ac95-ff9324d8b41a}</ProjectGuid>
+    <ProjectGuid>{73d5813d-18d9-40c5-9c50-cd7a50048a60}</ProjectGuid>
     <avrdevice>ATmega128</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>B3c</AssemblyName>
-    <Name>B3c</Name>
-    <RootNamespace>B3c</RootNamespace>
+    <AssemblyName>B4a</AssemblyName>
+    <Name>B4a</Name>
+    <RootNamespace>B4a</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>

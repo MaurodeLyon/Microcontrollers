@@ -1,7 +1,7 @@
 /*
-* B3c.c
+* B4a.c
 *
-* Created: 16-3-2016 11:28:43
+* Created: 16-3-2016 11:44:43
 * Author : mauro
 */
 
@@ -110,6 +110,17 @@ void spi_writeWord( unsigned char adress, unsigned char data )
 	spi_write(data);		// write data
 	spi_slaveDeSelect(0);	// Deselect display chip
 }
+void writeLedDisplay( int value ) // toont de waarde van value op het 4-digit display
+{
+	int i = 0;
+	int x = 4444;
+	while (x > 0) {
+		int digit = x % 10;
+		spi_writeWord(i,x);
+		i++;
+		x /= 10;
+	}
+}
 
 int main()
 {
@@ -124,12 +135,6 @@ int main()
 	}
 	wait(1000);
 	
-	// write 4-digit data
-	for (char i = 1; i <= 4; i++)
-	{
-		spi_writeWord(i,i);
-		wait(1000);
-	}
-	wait(1000);
+	writeLedDisplay(1);
 	return (1);
 }
