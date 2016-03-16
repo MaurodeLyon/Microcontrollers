@@ -112,15 +112,15 @@ void spi_writeWord( unsigned char adress, unsigned char data )
 }
 void writeLedDisplay( int value ) // toont de waarde van value op het 4-digit display
 {
-	int i = 0;
-	int x = 4444;
-	while (x > 0) {
-		int digit = x % 10;
-		spi_writeWord(i,x);
+	int i = 1;
+	while (value > 0) {
+		int digit = value % 10;
+		spi_writeWord(i,digit);
+		value /= 10;
 		i++;
-		x /= 10;
 	}
 }
+
 
 int main()
 {
@@ -131,10 +131,9 @@ int main()
 	// clear display (all eight's)
 	for (char i = 1; i <= 4; i++)
 	{
-		spi_writeWord(i,8);
+		spi_writeWord(i,15);
 	}
 	wait(1000);
-	
-	writeLedDisplay(1);
+	writeLedDisplay(15);
 	return (1);
 }
