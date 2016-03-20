@@ -33,13 +33,13 @@ int main(void)
 
     while (1)
     {
-	    wait(150);							// every 50 ms (busy waiting)
+	    wait(150);							// every 150 ms (busy waiting)
 
 	    uart0_receiveString( buffer );		// receive string from uart
 	    
 	    // write string to LCD display
-		buffer[0]=' ';
-	   display_text(buffer); 
+		buffer[0]=' '; //Remove first character (unknown symbol)
+	   display_text(buffer); //Show buffer on LCD
 	   
     }
 }
