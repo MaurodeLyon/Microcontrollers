@@ -37,6 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../i2c_master.c \
 ../main.c
 
 
@@ -47,15 +48,19 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+i2c_master.o \
 main.o
 
 OBJS_AS_ARGS +=  \
+i2c_master.o \
 main.o
 
 C_DEPS +=  \
+i2c_master.d \
 main.d
 
 C_DEPS_AS_ARGS +=  \
+i2c_master.d \
 main.d
 
 OUTPUT_FILE_PATH +=GhettoGochi.elf
@@ -72,6 +77,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

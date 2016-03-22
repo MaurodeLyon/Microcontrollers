@@ -3,27 +3,29 @@ GhettoGochi.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000118  2**0
+  0 .data         00000000  00800100  00800100  0000017a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000c4  00000000  00000000  00000054  2**1
+  1 .text         00000126  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000118  2**0
+  2 .comment      00000030  00000000  00000000  0000017a  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000148  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001ac  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  00000184  2**0
+  4 .debug_aranges 00000048  00000000  00000000  000001e8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000000d4  00000000  00000000  000001a4  2**0
+  5 .debug_info   000002f3  00000000  00000000  00000230  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000076  00000000  00000000  00000278  2**0
+  6 .debug_abbrev 00000199  00000000  00000000  00000523  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000000b1  00000000  00000000  000002ee  2**0
+  7 .debug_line   00000234  00000000  00000000  000006bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  000003a0  2**2
+  8 .debug_frame  00000074  00000000  00000000  000008f0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000017d  00000000  00000000  000003c4  2**0
+  9 .debug_str    0000020e  00000000  00000000  00000964  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000010  00000000  00000000  00000541  2**0
+ 10 .debug_loc    0000002d  00000000  00000000  00000b72  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  00000b9f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -112,8 +114,8 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e4 ec       	ldi	r30, 0xC4	; 196
-  a0:	f0 e0       	ldi	r31, 0x00	; 0
+  9e:	e6 e2       	ldi	r30, 0x26	; 38
+  a0:	f1 e0       	ldi	r31, 0x01	; 1
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
   a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
@@ -122,32 +124,104 @@ Disassembly of section .text:
   ac:	a0 30       	cpi	r26, 0x00	; 0
   ae:	b1 07       	cpc	r27, r17
   b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
-  b2:	02 d0       	rcall	.+4      	; 0xb8 <main>
-  b4:	05 c0       	rjmp	.+10     	; 0xc0 <_exit>
+  b2:	1f d0       	rcall	.+62     	; 0xf2 <main>
+  b4:	36 c0       	rjmp	.+108    	; 0x122 <_exit>
 
 000000b6 <__bad_interrupt>:
   b6:	a4 cf       	rjmp	.-184    	; 0x0 <__vectors>
 
-000000b8 <main>:
-	0b00111100
-};
+000000b8 <TWIInit>:
+	while ((TWCR & (1<<TWINT)) == 0);
+}
+//send stop signal
+void TWIStop(void)
+{
+	TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
+  b8:	10 92 71 00 	sts	0x0071, r1
+  bc:	8c e0       	ldi	r24, 0x0C	; 12
+  be:	80 93 70 00 	sts	0x0070, r24
+  c2:	84 e0       	ldi	r24, 0x04	; 4
+  c4:	80 93 74 00 	sts	0x0074, r24
+  c8:	08 95       	ret
+
+000000ca <TWIStart>:
+  ca:	84 ea       	ldi	r24, 0xA4	; 164
+  cc:	80 93 74 00 	sts	0x0074, r24
+  d0:	e4 e7       	ldi	r30, 0x74	; 116
+  d2:	f0 e0       	ldi	r31, 0x00	; 0
+  d4:	80 81       	ld	r24, Z
+  d6:	88 23       	and	r24, r24
+  d8:	ec f7       	brge	.-6      	; 0xd4 <TWIStart+0xa>
+  da:	08 95       	ret
+
+000000dc <TWIWrite>:
+}
+
+void TWIWrite(uint8_t u8data)
+{
+	TWDR = u8data;
+  dc:	80 93 73 00 	sts	0x0073, r24
+	TWCR = (1<<TWINT)|(1<<TWEN);
+  e0:	84 e8       	ldi	r24, 0x84	; 132
+  e2:	80 93 74 00 	sts	0x0074, r24
+	while ((TWCR & (1<<TWINT)) == 0);
+  e6:	e4 e7       	ldi	r30, 0x74	; 116
+  e8:	f0 e0       	ldi	r31, 0x00	; 0
+  ea:	80 81       	ld	r24, Z
+  ec:	88 23       	and	r24, r24
+  ee:	ec f7       	brge	.-6      	; 0xea <TWIWrite+0xe>
+}
+  f0:	08 95       	ret
+
+000000f2 <main>:
 
 int main(void)
 {
 	DDRD = 0b11111111;
-  b8:	8f ef       	ldi	r24, 0xFF	; 255
-  ba:	81 bb       	out	0x11, r24	; 17
-	PORTD = 0b11111111;
-  bc:	82 bb       	out	0x12, r24	; 18
+  f2:	8f ef       	ldi	r24, 0xFF	; 255
+  f4:	81 bb       	out	0x11, r24	; 17
+	TWIInit();
+  f6:	e0 df       	rcall	.-64     	; 0xb8 <TWIInit>
+	TWIStart();
+  f8:	e8 df       	rcall	.-48     	; 0xca <TWIStart>
+
 	/* Replace with your application code */
 	while (1)
 	{
-	
-	}
-  be:	ff cf       	rjmp	.-2      	; 0xbe <main+0x6>
+		TWIWrite(0b01110000);
+  fa:	80 e7       	ldi	r24, 0x70	; 112
+  fc:	ef df       	rcall	.-34     	; 0xdc <TWIWrite>
+		TWIWrite(0b00000000);
+  fe:	80 e0       	ldi	r24, 0x00	; 0
+ 100:	ed df       	rcall	.-38     	; 0xdc <TWIWrite>
+		TWIWrite(0b00000000);
+ 102:	80 e0       	ldi	r24, 0x00	; 0
+ 104:	eb df       	rcall	.-42     	; 0xdc <TWIWrite>
+		TWIWrite(0b00000000);
+ 106:	80 e0       	ldi	r24, 0x00	; 0
+ 108:	e9 df       	rcall	.-46     	; 0xdc <TWIWrite>
+		TWIWrite(0b00000000);
+ 10a:	80 e0       	ldi	r24, 0x00	; 0
+ 10c:	e7 df       	rcall	.-50     	; 0xdc <TWIWrite>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-000000c0 <_exit>:
-  c0:	f8 94       	cli
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 10e:	2f e3       	ldi	r18, 0x3F	; 63
+ 110:	8d e0       	ldi	r24, 0x0D	; 13
+ 112:	93 e0       	ldi	r25, 0x03	; 3
+ 114:	21 50       	subi	r18, 0x01	; 1
+ 116:	80 40       	sbci	r24, 0x00	; 0
+ 118:	90 40       	sbci	r25, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x22>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x2c>
+ 11e:	00 00       	nop
+ 120:	ec cf       	rjmp	.-40     	; 0xfa <main+0x8>
 
-000000c2 <__stop_program>:
-  c2:	ff cf       	rjmp	.-2      	; 0xc2 <__stop_program>
+00000122 <_exit>:
+ 122:	f8 94       	cli
+
+00000124 <__stop_program>:
+ 124:	ff cf       	rjmp	.-2      	; 0x124 <__stop_program>
