@@ -1,0 +1,5 @@
+
+AVRASM ver. 2.2.0  C:\Users\mauro\Documents\GitHub\Microcontrollers\Track6\Track6\Track6\main.asm Tue Mar 22 12:12:01 2016
+
+[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.98\avrasm\inc\m128def.inc'
+C:\Users\mauro\Documents\GitHub\Microcontrollers\Track6\Track6\Track6\main.asm(12): error: code: Unknown instruction or macro

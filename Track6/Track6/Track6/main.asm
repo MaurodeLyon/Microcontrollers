@@ -6,7 +6,9 @@
 ;
 
 
-; Replace with your application code
+; Replace with your applstart:
 start:
-    inc r16
+	ldi r20,$88
+	mov r12,r20
     rjmp start
+
