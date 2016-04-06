@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.57  C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\main.asm Wed Apr 06 12:26:57 2016
+AVRASM ver. 2.1.57  C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\One\main.asm Wed Apr 06 14:10:31 2016
 
 
 EQU  SIGNATURE_000 0000001e
@@ -867,5 +867,4 @@ EQU  UTXC1addr    00000040
 EQU  TWIaddr      00000042
 EQU  SPMRaddr     00000044
 EQU  INT_VECTORS_SIZE 00000046
-CSEG main         00000200
-CSEG no_end       00000204
+CSEG start        00000000
