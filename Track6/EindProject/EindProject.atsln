@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "GhettoGochi", "GhettoGochi\GhettoGochi.cproj", "{DCE6C7E3-EE26-4D79-826B-08594B9AD897}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ledDemo", "ledDemo\ledDemo.cproj", "{5309462B-9D64-4445-A7B4-6F5040B16617}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -15,6 +17,10 @@ Global
 		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|AVR.Build.0 = Debug|AVR
 		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.ActiveCfg = Release|AVR
 		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.Build.0 = Release|AVR
+		{5309462B-9D64-4445-A7B4-6F5040B16617}.Debug|AVR.ActiveCfg = Debug|AVR
+		{5309462B-9D64-4445-A7B4-6F5040B16617}.Debug|AVR.Build.0 = Debug|AVR
+		{5309462B-9D64-4445-A7B4-6F5040B16617}.Release|AVR.ActiveCfg = Release|AVR
+		{5309462B-9D64-4445-A7B4-6F5040B16617}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
