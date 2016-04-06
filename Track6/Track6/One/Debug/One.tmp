@@ -1,29 +1,28 @@
 <ASSEMBLER_INFO>
  <VERSION>2.1.57</VERSION>
  <DEVICE>"ATmega128"</DEVICE>
- <WORKING_DIR>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\One\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\avrasm\inc</DIR>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\One\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.0.90\avrasm\inc\m128def.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\Debug\a.obj</FILE>
+  <FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\One\Debug\One.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
-  <FILE>a.hex</FILE>
+  <FILE>One.hex</FILE>
  </HEX_FILES>
  <OUTPUT_FILES>
-  <FILE>a.map</FILE>
-  <FILE>a.lss</FILE>
+  <FILE>One.map</FILE>
+  <FILE>One.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <main><FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\main.asm</FILE><LINE>12</LINE></main>
-  <no_end><FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\a\main.asm</FILE><LINE>22</LINE></no_end>
+  <start><FILE>C:\Users\Arthur\Documents\GitHub\Microcontrollers\Track6\Track6\One\main.asm</FILE><LINE>10</LINE></start>
  </LABELS>
 </ASSEMBLER_INFO>
