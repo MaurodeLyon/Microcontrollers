@@ -148,8 +148,8 @@ static void lcd_command ( unsigned char dat )
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  c0:	ef ec       	ldi	r30, 0xCF	; 207
-  c2:	f7 e0       	ldi	r31, 0x07	; 7
+  c0:	e9 ef       	ldi	r30, 0xF9	; 249
+  c2:	f0 e0       	ldi	r31, 0x00	; 0
   c4:	31 97       	sbiw	r30, 0x01	; 1
   c6:	f1 f7       	brne	.-4      	; 0xc4 <lcd_command+0xc>
   c8:	00 c0       	rjmp	.+0      	; 0xca <lcd_command+0x12>
@@ -168,8 +168,8 @@ static void lcd_command ( unsigned char dat )
   d8:	85 bb       	out	0x15, r24	; 21
 	PORTC = PORTC | 0x08;			// data (RS=0),
   da:	ab 9a       	sbi	0x15, 3	; 21
-  dc:	8f ec       	ldi	r24, 0xCF	; 207
-  de:	97 e0       	ldi	r25, 0x07	; 7
+  dc:	89 ef       	ldi	r24, 0xF9	; 249
+  de:	90 e0       	ldi	r25, 0x00	; 0
   e0:	01 97       	sbiw	r24, 0x01	; 1
   e2:	f1 f7       	brne	.-4      	; 0xe0 <lcd_command+0x28>
   e4:	00 c0       	rjmp	.+0      	; 0xe6 <lcd_command+0x2e>
@@ -259,8 +259,8 @@ static void lcd_writeChar( unsigned char dat )
  11e:	95 b3       	in	r25, 0x15	; 21
  120:	9c 60       	ori	r25, 0x0C	; 12
  122:	95 bb       	out	0x15, r25	; 21
- 124:	8f ec       	ldi	r24, 0xCF	; 207
- 126:	97 e0       	ldi	r25, 0x07	; 7
+ 124:	89 ef       	ldi	r24, 0xF9	; 249
+ 126:	90 e0       	ldi	r25, 0x00	; 0
  128:	01 97       	sbiw	r24, 0x01	; 1
  12a:	f1 f7       	brne	.-4      	; 0x128 <display_text+0x22>
  12c:	00 c0       	rjmp	.+0      	; 0x12e <display_text+0x28>
@@ -280,8 +280,8 @@ static void lcd_writeChar( unsigned char dat )
  13c:	95 b3       	in	r25, 0x15	; 21
  13e:	9c 60       	ori	r25, 0x0C	; 12
  140:	95 bb       	out	0x15, r25	; 21
- 142:	8f ec       	ldi	r24, 0xCF	; 207
- 144:	97 e0       	ldi	r25, 0x07	; 7
+ 142:	89 ef       	ldi	r24, 0xF9	; 249
+ 144:	90 e0       	ldi	r25, 0x00	; 0
  146:	01 97       	sbiw	r24, 0x01	; 1
  148:	f1 f7       	brne	.-4      	; 0x146 <display_text+0x40>
  14a:	00 c0       	rjmp	.+0      	; 0x14c <display_text+0x46>

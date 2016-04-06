@@ -3,29 +3,29 @@ A4.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000000e  00800100  00000200  00000274  2**0
+  0 .data         0000000e  00800100  000001dc  00000250  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000200  00000000  00000000  00000074  2**1
+  1 .text         000001dc  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000282  2**0
+  2 .comment      00000030  00000000  00000000  0000025e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002b4  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000290  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000050  00000000  00000000  000002f0  2**0
+  4 .debug_aranges 00000050  00000000  00000000  000002cc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000525  00000000  00000000  00000340  2**0
+  5 .debug_info   00000525  00000000  00000000  0000031c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000001ed  00000000  00000000  00000865  2**0
+  6 .debug_abbrev 000001ed  00000000  00000000  00000841  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000336  00000000  00000000  00000a52  2**0
+  7 .debug_line   00000336  00000000  00000000  00000a2e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000a4  00000000  00000000  00000d88  2**2
+  8 .debug_frame  000000a4  00000000  00000000  00000d64  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000001e5  00000000  00000000  00000e2c  2**0
+  9 .debug_str    000001e5  00000000  00000000  00000e08  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000001de  00000000  00000000  00001011  2**0
+ 10 .debug_loc    000001de  00000000  00000000  00000fed  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000058  00000000  00000000  000011ef  2**0
+ 11 .debug_ranges 00000058  00000000  00000000  000011cb  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -114,8 +114,8 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e0 e0       	ldi	r30, 0x00	; 0
-  a0:	f2 e0       	ldi	r31, 0x02	; 2
+  9e:	ec ed       	ldi	r30, 0xDC	; 220
+  a0:	f1 e0       	ldi	r31, 0x01	; 1
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
   a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
@@ -125,7 +125,7 @@ Disassembly of section .text:
   ae:	b1 07       	cpc	r27, r17
   b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
   b2:	63 d0       	rcall	.+198    	; 0x17a <main>
-  b4:	a3 c0       	rjmp	.+326    	; 0x1fc <_exit>
+  b4:	91 c0       	rjmp	.+290    	; 0x1d8 <_exit>
 
 000000b6 <__bad_interrupt>:
   b6:	a4 cf       	rjmp	.-184    	; 0x0 <__vectors>
@@ -148,8 +148,8 @@ static void lcd_command ( unsigned char dat )
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  c0:	ef ec       	ldi	r30, 0xCF	; 207
-  c2:	f7 e0       	ldi	r31, 0x07	; 7
+  c0:	e9 ef       	ldi	r30, 0xF9	; 249
+  c2:	f0 e0       	ldi	r31, 0x00	; 0
   c4:	31 97       	sbiw	r30, 0x01	; 1
   c6:	f1 f7       	brne	.-4      	; 0xc4 <lcd_command+0xc>
   c8:	00 c0       	rjmp	.+0      	; 0xca <lcd_command+0x12>
@@ -168,8 +168,8 @@ static void lcd_command ( unsigned char dat )
   d8:	85 bb       	out	0x15, r24	; 21
 	PORTC = PORTC | 0x08;			// data (RS=0),
   da:	ab 9a       	sbi	0x15, 3	; 21
-  dc:	8f ec       	ldi	r24, 0xCF	; 207
-  de:	97 e0       	ldi	r25, 0x07	; 7
+  dc:	89 ef       	ldi	r24, 0xF9	; 249
+  de:	90 e0       	ldi	r25, 0x00	; 0
   e0:	01 97       	sbiw	r24, 0x01	; 1
   e2:	f1 f7       	brne	.-4      	; 0xe0 <lcd_command+0x28>
   e4:	00 c0       	rjmp	.+0      	; 0xe6 <lcd_command+0x2e>
@@ -275,8 +275,8 @@ static void lcd_writeChar( unsigned char dat )
  12a:	95 b3       	in	r25, 0x15	; 21
  12c:	9c 60       	ori	r25, 0x0C	; 12
  12e:	95 bb       	out	0x15, r25	; 21
- 130:	8f ec       	ldi	r24, 0xCF	; 207
- 132:	97 e0       	ldi	r25, 0x07	; 7
+ 130:	89 ef       	ldi	r24, 0xF9	; 249
+ 132:	90 e0       	ldi	r25, 0x00	; 0
  134:	01 97       	sbiw	r24, 0x01	; 1
  136:	f1 f7       	brne	.-4      	; 0x134 <display_text+0x22>
  138:	00 c0       	rjmp	.+0      	; 0x13a <display_text+0x28>
@@ -296,8 +296,8 @@ static void lcd_writeChar( unsigned char dat )
  148:	95 b3       	in	r25, 0x15	; 21
  14a:	9c 60       	ori	r25, 0x0C	; 12
  14c:	95 bb       	out	0x15, r25	; 21
- 14e:	8f ec       	ldi	r24, 0xCF	; 207
- 150:	97 e0       	ldi	r25, 0x07	; 7
+ 14e:	89 ef       	ldi	r24, 0xF9	; 249
+ 150:	90 e0       	ldi	r25, 0x00	; 0
  152:	01 97       	sbiw	r24, 0x01	; 1
  154:	f1 f7       	brne	.-4      	; 0x152 <display_text+0x40>
  156:	00 c0       	rjmp	.+0      	; 0x158 <display_text+0x46>
@@ -344,85 +344,67 @@ int main(void)
  17c:	80 e0       	ldi	r24, 0x00	; 0
  17e:	91 e0       	ldi	r25, 0x01	; 1
  180:	c8 df       	rcall	.-112    	; 0x112 <display_text>
- 182:	2f e7       	ldi	r18, 0x7F	; 127
- 184:	8a e1       	ldi	r24, 0x1A	; 26
- 186:	96 e0       	ldi	r25, 0x06	; 6
- 188:	21 50       	subi	r18, 0x01	; 1
- 18a:	80 40       	sbci	r24, 0x00	; 0
- 18c:	90 40       	sbci	r25, 0x00	; 0
- 18e:	e1 f7       	brne	.-8      	; 0x188 <main+0xe>
- 190:	00 c0       	rjmp	.+0      	; 0x192 <main+0x18>
- 192:	00 00       	nop
+ 182:	83 e2       	ldi	r24, 0x23	; 35
+ 184:	94 ef       	ldi	r25, 0xF4	; 244
+ 186:	01 97       	sbiw	r24, 0x01	; 1
+ 188:	f1 f7       	brne	.-4      	; 0x186 <main+0xc>
+ 18a:	00 c0       	rjmp	.+0      	; 0x18c <main+0x12>
+ 18c:	00 00       	nop
 	while (1)
 	{
 		_delay_ms(250);
 		scroll_rechts();
- 194:	ae df       	rcall	.-164    	; 0xf2 <scroll_rechts>
- 196:	2f e7       	ldi	r18, 0x7F	; 127
- 198:	8a e1       	ldi	r24, 0x1A	; 26
- 19a:	96 e0       	ldi	r25, 0x06	; 6
- 19c:	21 50       	subi	r18, 0x01	; 1
- 19e:	80 40       	sbci	r24, 0x00	; 0
- 1a0:	90 40       	sbci	r25, 0x00	; 0
- 1a2:	e1 f7       	brne	.-8      	; 0x19c <main+0x22>
- 1a4:	00 c0       	rjmp	.+0      	; 0x1a6 <main+0x2c>
- 1a6:	00 00       	nop
+ 18e:	b1 df       	rcall	.-158    	; 0xf2 <scroll_rechts>
+ 190:	83 e2       	ldi	r24, 0x23	; 35
+ 192:	94 ef       	ldi	r25, 0xF4	; 244
+ 194:	01 97       	sbiw	r24, 0x01	; 1
+ 196:	f1 f7       	brne	.-4      	; 0x194 <main+0x1a>
+ 198:	00 c0       	rjmp	.+0      	; 0x19a <main+0x20>
+ 19a:	00 00       	nop
 		_delay_ms(250);
 		scroll_rechts();
- 1a8:	a4 df       	rcall	.-184    	; 0xf2 <scroll_rechts>
- 1aa:	2f e7       	ldi	r18, 0x7F	; 127
- 1ac:	8a e1       	ldi	r24, 0x1A	; 26
- 1ae:	96 e0       	ldi	r25, 0x06	; 6
- 1b0:	21 50       	subi	r18, 0x01	; 1
- 1b2:	80 40       	sbci	r24, 0x00	; 0
- 1b4:	90 40       	sbci	r25, 0x00	; 0
- 1b6:	e1 f7       	brne	.-8      	; 0x1b0 <main+0x36>
- 1b8:	00 c0       	rjmp	.+0      	; 0x1ba <main+0x40>
- 1ba:	00 00       	nop
+ 19c:	aa df       	rcall	.-172    	; 0xf2 <scroll_rechts>
+ 19e:	83 e2       	ldi	r24, 0x23	; 35
+ 1a0:	94 ef       	ldi	r25, 0xF4	; 244
+ 1a2:	01 97       	sbiw	r24, 0x01	; 1
+ 1a4:	f1 f7       	brne	.-4      	; 0x1a2 <main+0x28>
+ 1a6:	00 c0       	rjmp	.+0      	; 0x1a8 <main+0x2e>
+ 1a8:	00 00       	nop
 		_delay_ms(250);
 		scroll_rechts();
- 1bc:	9a df       	rcall	.-204    	; 0xf2 <scroll_rechts>
- 1be:	2f e7       	ldi	r18, 0x7F	; 127
- 1c0:	8a e1       	ldi	r24, 0x1A	; 26
- 1c2:	96 e0       	ldi	r25, 0x06	; 6
- 1c4:	21 50       	subi	r18, 0x01	; 1
- 1c6:	80 40       	sbci	r24, 0x00	; 0
- 1c8:	90 40       	sbci	r25, 0x00	; 0
- 1ca:	e1 f7       	brne	.-8      	; 0x1c4 <main+0x4a>
- 1cc:	00 c0       	rjmp	.+0      	; 0x1ce <main+0x54>
- 1ce:	00 00       	nop
+ 1aa:	a3 df       	rcall	.-186    	; 0xf2 <scroll_rechts>
+ 1ac:	83 e2       	ldi	r24, 0x23	; 35
+ 1ae:	94 ef       	ldi	r25, 0xF4	; 244
+ 1b0:	01 97       	sbiw	r24, 0x01	; 1
+ 1b2:	f1 f7       	brne	.-4      	; 0x1b0 <main+0x36>
+ 1b4:	00 c0       	rjmp	.+0      	; 0x1b6 <main+0x3c>
+ 1b6:	00 00       	nop
 		_delay_ms(250);
 		scroll_links();
- 1d0:	8d df       	rcall	.-230    	; 0xec <scroll_links>
- 1d2:	2f e7       	ldi	r18, 0x7F	; 127
- 1d4:	8a e1       	ldi	r24, 0x1A	; 26
- 1d6:	96 e0       	ldi	r25, 0x06	; 6
- 1d8:	21 50       	subi	r18, 0x01	; 1
- 1da:	80 40       	sbci	r24, 0x00	; 0
- 1dc:	90 40       	sbci	r25, 0x00	; 0
- 1de:	e1 f7       	brne	.-8      	; 0x1d8 <main+0x5e>
- 1e0:	00 c0       	rjmp	.+0      	; 0x1e2 <main+0x68>
- 1e2:	00 00       	nop
+ 1b8:	99 df       	rcall	.-206    	; 0xec <scroll_links>
+ 1ba:	83 e2       	ldi	r24, 0x23	; 35
+ 1bc:	94 ef       	ldi	r25, 0xF4	; 244
+ 1be:	01 97       	sbiw	r24, 0x01	; 1
+ 1c0:	f1 f7       	brne	.-4      	; 0x1be <main+0x44>
+ 1c2:	00 c0       	rjmp	.+0      	; 0x1c4 <main+0x4a>
+ 1c4:	00 00       	nop
 		_delay_ms(250);
 		scroll_links();
- 1e4:	83 df       	rcall	.-250    	; 0xec <scroll_links>
- 1e6:	2f e7       	ldi	r18, 0x7F	; 127
- 1e8:	8a e1       	ldi	r24, 0x1A	; 26
- 1ea:	96 e0       	ldi	r25, 0x06	; 6
- 1ec:	21 50       	subi	r18, 0x01	; 1
- 1ee:	80 40       	sbci	r24, 0x00	; 0
- 1f0:	90 40       	sbci	r25, 0x00	; 0
- 1f2:	e1 f7       	brne	.-8      	; 0x1ec <main+0x72>
- 1f4:	00 c0       	rjmp	.+0      	; 0x1f6 <main+0x7c>
- 1f6:	00 00       	nop
+ 1c6:	92 df       	rcall	.-220    	; 0xec <scroll_links>
+ 1c8:	83 e2       	ldi	r24, 0x23	; 35
+ 1ca:	94 ef       	ldi	r25, 0xF4	; 244
+ 1cc:	01 97       	sbiw	r24, 0x01	; 1
+ 1ce:	f1 f7       	brne	.-4      	; 0x1cc <main+0x52>
+ 1d0:	00 c0       	rjmp	.+0      	; 0x1d2 <main+0x58>
+ 1d2:	00 00       	nop
 		_delay_ms(250);
 		scroll_links();
- 1f8:	79 df       	rcall	.-270    	; 0xec <scroll_links>
+ 1d4:	8b df       	rcall	.-234    	; 0xec <scroll_links>
 	}
- 1fa:	c3 cf       	rjmp	.-122    	; 0x182 <main+0x8>
+ 1d6:	d5 cf       	rjmp	.-86     	; 0x182 <main+0x8>
 
-000001fc <_exit>:
- 1fc:	f8 94       	cli
+000001d8 <_exit>:
+ 1d8:	f8 94       	cli
 
-000001fe <__stop_program>:
- 1fe:	ff cf       	rjmp	.-2      	; 0x1fe <__stop_program>
+000001da <__stop_program>:
+ 1da:	ff cf       	rjmp	.-2      	; 0x1da <__stop_program>

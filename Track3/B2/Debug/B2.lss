@@ -143,8 +143,8 @@ Disassembly of section .text:
   b2:	6c f4       	brge	.+26     	; 0xce <wait+0x20>
   b4:	20 e0       	ldi	r18, 0x00	; 0
   b6:	30 e0       	ldi	r19, 0x00	; 0
-  b8:	ef ec       	ldi	r30, 0xCF	; 207
-  ba:	f7 e0       	ldi	r31, 0x07	; 7
+  b8:	e9 ef       	ldi	r30, 0xF9	; 249
+  ba:	f0 e0       	ldi	r31, 0x00	; 0
   bc:	31 97       	sbiw	r30, 0x01	; 1
   be:	f1 f7       	brne	.-4      	; 0xbc <wait+0xe>
   c0:	00 c0       	rjmp	.+0      	; 0xc2 <wait+0x14>

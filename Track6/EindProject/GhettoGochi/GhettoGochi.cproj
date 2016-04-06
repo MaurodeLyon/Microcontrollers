@@ -133,13 +133,16 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="i2c_master.c">
+    <Compile Include="I2C.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="i2c_master.h">
+    <Compile Include="I2C.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Tama.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

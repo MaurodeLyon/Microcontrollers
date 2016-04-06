@@ -133,8 +133,8 @@ Version :    	DMK, Initial code
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  a8:	ef ec       	ldi	r30, 0xCF	; 207
-  aa:	f7 e0       	ldi	r31, 0x07	; 7
+  a8:	e9 ef       	ldi	r30, 0xF9	; 249
+  aa:	f0 e0       	ldi	r31, 0x00	; 0
   ac:	31 97       	sbiw	r30, 0x01	; 1
   ae:	f1 f7       	brne	.-4      	; 0xac <wait+0xe>
   b0:	00 c0       	rjmp	.+0      	; 0xb2 <wait+0x14>

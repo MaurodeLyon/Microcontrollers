@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-i2c_master.c
+I2C.c
 
 main.c
 

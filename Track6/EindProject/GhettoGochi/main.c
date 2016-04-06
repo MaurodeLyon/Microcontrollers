@@ -7,107 +7,144 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
+#include "I2C.h"
+#include "Tama.h"
 
-#include "i2c_master.h"
-
-#define BIT(x) ( 1<<x )
-#define I2C_SCL_PIN		0			// I2C Serial Clock
-#define I2C_SDA_PIN		0			// I2C Serial Data	
-#define DEVICE_ADDRES	0b11100000	// device addres
-#define SYSTEM_SETUP	0b00100001	// system setup
-
-int smile_bmp[] =
+#define BIT(x) ( 1<<x );
+int overflow;
+void check()
 {
-	0b00111100,
-	0b01000010,
-	0b10100101,
-	0b10000001,
-	0b10100101,
-	0b10011001,
-	0b01000010,
-	0b00111100
-};
-
-int neutral_bmp[] =
+	switch (status)
+	{
+		case 0:
+		smile = frown_bmp;
+		case 1:
+		smile = frown_bmp;
+		transmit(0b11100000);	//Display Dimming 8/16 duty cycle
+		break;
+		case 2:
+		smile = frown_bmp;
+		transmit(0b11100001);
+		break;
+		case 3:
+		smile = frown_bmp;
+		transmit(0b11100010);
+		break;
+		case 4:
+		smile = frown_bmp;
+		transmit(0b11100011);
+		break;
+		case 5:
+		smile = neutral_bmp;
+		transmit(0b11100100);
+		break;
+		case 6:
+		smile = neutral_bmp;
+		transmit(0b11100101);
+		break;
+		case 7:
+		smile = neutral_bmp;
+		transmit(0b11100110);
+		break;
+		case 8:
+		smile = neutral_bmp;
+		transmit(0b11100111);
+		break;
+		case 9:
+		smile = neutral_bmp;
+		transmit(0b11101000);
+		break;
+		case 10:
+		smile = smile_bmp;
+		transmit(0b11101001);
+		break;
+		case 11:
+		smile = smile_bmp;
+		transmit(0b11101010);
+		break;
+		case 12:
+		smile = smile_bmp;
+		transmit(0b11101011);
+		break;
+		case 13:
+		smile = smile_bmp;
+		transmit(0b11101100);
+		break;
+		case 14:
+		smile = smile_bmp;
+		transmit(0b11101101);
+		break;
+		case 15:
+		smile = smile_bmp;
+		transmit(0b11101110);
+		break;
+		case 16:
+		smile = smile_bmp;
+		transmit(0b11101111);
+		break;
+		default:
+		if(status > 16)
+		{
+			status = 16;
+		}
+		if(status < 0){
+			status = 0;
+		}
+		break;
+	}
+}
+ISR( INT4_vect )
 {
-	0b00111100,
-	0b01000010,
-	0b10100101,
-	0b10000001,
-	0b10111101,
-	0b10000001,
-	0b01000010,
-	0b00111100
-};
-
-int frown_bmp[] =
+	status++;
+	PORTA ^= (1<<6);	// Toggle PORTA.7
+}
+ISR( INT5_vect )
 {
-	0b00111100,
-	0b01000010,
-	0b10100101,
-	0b10000001,
-	0b10011001,
-	0b10100101,
-	0b01000010,
-	0b00111100
-};
 
-void init(void)
+}
+ISR( INT6_vect )
 {
-	i2c_init();
-	i2c_start(DEVICE_ADDRES);
-	//Internal system clock enable
-	i2c_write(SYSTEM_SETUP);
-	//ROW/INT output pin set + INT pin output level set
-	i2c_write(0b10101111);
-	//Dimming set
-	i2c_write(0b11101001);
-	//Blinking set
-	i2c_write(0b10000101);
+
 }
 
-void TWIInit(void)
+ISR( TIMER2_OVF_vect)
 {
-	//set SCL to 400kHz
-	TWSR = 0x00;
-	TWBR = 0x0C;
-	//enable TWI
-	TWCR = (1<<TWEN);
+	TCNT2 = 0;
+	if(overflow > 4){
+		status--;
+		overflow = 0;
+	}
+	PORTA ^= (1<<7);	// Toggle PORTA.7
+	overflow++;
 }
-
-void TWIStart(void)
+int main( void )
 {
-	TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
-	while ((TWCR & (1<<TWINT)) == 0);
-}
-//send stop signal
-void TWIStop(void)
-{
-	TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
-}
+	DDRA = 0b11111111;
+	//enable interrupts op port E4 5 6
+	EICRB |= 0b00111111;	// Interrupt 4,5 en 6 op rising edge
+	EIMSK |= 0b01110000;	// Enable INT4, INT5, INT6
+	
+	TCNT2 = 0;				// Preset value of counter 2
+	TIMSK |= (1<<6);		// T2 overflow interrupt enable
+	TCCR2 = 0b00000101;		// Initialize T2: ext.counting, rising edge, run
 
-void TWIWrite(uint8_t u8data)
-{
-	TWDR = u8data;
-	TWCR = (1<<TWINT)|(1<<TWEN);
-	while ((TWCR & (1<<TWINT)) == 0);
-}
 
-int main(void)
-{
-	DDRD = 0b11111111;
-	TWIInit();
-	TWIStart();
-
-	/* Replace with your application code */
+	twi_init();				// Init TWI interface
+	// Init HT16K22. Page 32 datasheet
+	transmit(0x21);			// Internal osc on (page 10 HT16K33)
+	transmit(0xA0);			// HT16K33 pins all output
+	transmit(0b11101010);	//Display Dimming 8/16 duty cycle
+	transmit(0x81);			// Display OFF - Blink On
+	
+	status = 0;
+	sei();
 	while (1)
 	{
-		TWIWrite(0b01110000);
-		TWIWrite(0b00000000);
-		TWIWrite(0b00000000);
-		TWIWrite(0b00000000);
-		TWIWrite(0b00000000);
-		_delay_ms(1000);
+		draw(smile);
+		check();
 	}
+
+	return 1;
 }
 
