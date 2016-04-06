@@ -1,0 +1,2 @@
+https://github.com/g4lvanix/I2C-master-lib
+http://www.avrfreaks.net/forum/i2c-twi-library
